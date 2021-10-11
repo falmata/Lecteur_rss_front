@@ -1,0 +1,86 @@
+<div class="container mt-5" xmlns="http://www.w3.org/1999/html">
+  <div class="row">
+    <h2><strong>{{RssData?.title}}</strong></h2>
+    <p class="card-text"><small class="text-muted">{{RssData?.description}}</small></p>
+    <fa-icon [icon]="faEdit" type="button" (click)="open(mymodal)"></fa-icon>
+  </div>
+  <br><br>
+  <h5 class="card-text"><small class="text-muted">Actualités du {{RssData?.pubDate | date: 'dd/MM/yyyy'}}</small></h5>
+
+  <div class="row">
+    <div *ngFor="let o of items | paginate: { id: 'feed_list',
+                                                      itemsPerPage: 4,
+                                                      currentPage: page,
+                                                      totalItems: items?.length}" class="col-md-12" style="height: 25%; margin-bottom: 10px;" >
+      <div class="row no-gutters">
+        <div class="col-md-2">
+          <img src="{{o.media.details.url}}" class="card-img" style="margin-top: 20px;">
+        </div>
+        <div class="col-md-10">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{o.title}}</strong><i class="fa fa-pencil-square" ></i></h5> <i class="fa fa-pencil-square" aria-hidden="true"></i>
+            <p class="card-text"><small class="text-muted">{{getdiffDate(o.pubDate)}}</small></p>
+            <p class="card-text text-muted" style="text-align: justify"> {{o.description}}  <a href="{{o.link}}" target="_blank" class="card-link">Plus</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row text-center">
+    <pagination-controls  id="feed_list"
+                          (pageChange)="page=($event)"
+                          maxSize="4"
+                          directionLinks="true"
+                          responsive="true"
+                          previousLabel="Previous"
+                          nextLabel="Next">
+    </pagination-controls>
+
+  <div>
+
+   <!-- modal -->
+    <ng-template #mymodal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Formulaire</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div *ngIf="RssData">
+          <form>
+            <div class="form-group">
+              <label for="title">Titre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title" [(ngModel)]="RssData.title"
+                name="title"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                [(ngModel)]="RssData.description"
+                name="description"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+            <div>
+              <input type="hidden" [(ngModel)]="RssData._id" [ngModelOptions]="{standalone: true}"/>
+            </div>
+            </form>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateChannel();modal.dismiss('close modal')">Enregistrer</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      </div>
+    </ng-template>
+</div>
+</div></div>
