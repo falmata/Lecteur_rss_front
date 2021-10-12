@@ -5,7 +5,6 @@
     <fa-icon [icon]="faEdit" type="button" (click)="open(mymodal)"></fa-icon>
   </div>
   <br><br>
-  <h5 class="card-text"><small class="text-muted">Actualités du {{RssData?.pubDate | date: 'dd/MM/yyyy'}}</small></h5>
 
   <div class="row">
     <div *ngFor="let o of items | paginate: { id: 'feed_list',
@@ -19,7 +18,7 @@
         <div class="col-md-10">
           <div class="card-body">
             <h5 class="card-title"><strong>{{o.title}}</strong><i class="fa fa-pencil-square" ></i></h5> <i class="fa fa-pencil-square" aria-hidden="true"></i>
-            <p class="card-text"><small class="text-muted">{{getdiffDate(o.pubDate)}}</small></p>
+            <p class="card-text"><small class="text-muted">Publié il y'a {{getdiffDate(o.pubDate)}}</small></p>
             <p class="card-text text-muted" style="text-align: justify"> {{o.description}}  <a href="{{o.link}}" target="_blank" class="card-link">Plus</a></p>
           </div>
         </div>
